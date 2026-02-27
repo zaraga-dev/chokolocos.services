@@ -72,14 +72,13 @@ on:
   push:
     branches:
     - main
-  workflow_dispatch:
 
-# env:
-#   AZURE_WEBAPP_NAME: chokolocos-service
-#   AZURE_WEBAPP_PACKAGE_PATH: chokolocos.service.ApiService/published
-#   CONFIGURATION: Release
-#   DOTNET_CORE_VERSION: 8.0.x
-#   WORKING_DIRECTORY: chokolocos.service.ApiService
+env:
+  AZURE_WEBAPP_NAME: chokolocos-service
+  AZURE_WEBAPP_PACKAGE_PATH: chokolocos.service.ApiService/published
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 8.0.x
+  WORKING_DIRECTORY: chokolocos.service.ApiService
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -112,16 +111,20 @@ jobs:
         name: webapp
         path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
     - name: Azure Login
-      # uses: azure/login@v2
-      # with:
-      #   creds: ${{ secrets.chokolocos_service_SPN }}
       uses: azure/login@v2
       with:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_ED833795C4464FEFA14578631D98764E }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F3F2F2A48E604118B286F0D13CCB223B }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2A74C899DD444CB39DA251E1BCDAAE32 }}
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
+    # - name: Deploy to Azure WebApp
+    #   uses: azure/webapps-deploy@v2
+    #   with:
+    #     app-name: ${{ env.AZURE_WEBAPP_NAME }}
+    #     package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v3
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        app-name: 'chokolocos-service'
+        slot-name: 'Production'
+        package: .
