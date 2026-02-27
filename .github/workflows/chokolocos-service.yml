@@ -71,7 +71,7 @@ name: Compilar e implementar la aplicación de .NET Core en la aplicación web 
 on:
   push:
     branches:
-    - main
+    - yaml-test
 
 env:
   AZURE_WEBAPP_NAME: chokolocos-service
