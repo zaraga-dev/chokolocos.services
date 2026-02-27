@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <Reference Include="chokolocos.dashboard.ServiceDefaults">
-      <HintPath>..\..\chokolocos.dashboard\chokolocos.dashboard.ServiceDefaults\bin\Release\net8.0\publish\chokolocos.dashboard.ServiceDefaults.dll</HintPath>
+      <HintPath>..\lib\chokolocos.dashboard.ServiceDefaults.dll</HintPath>
     </Reference>
   </ItemGroup>
 
